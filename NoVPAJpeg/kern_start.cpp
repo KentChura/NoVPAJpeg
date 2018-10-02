@@ -16,7 +16,7 @@ static const char *binPath = "/System/Library/PrivateFrameworks/AppleVPA.framewo
 
 // Accompanied processes
 static const char *procList[] {
-	"/System/Library/Frameworks/LocalAuthentication.framework/Support/DaemonUtils.framework/Versions/A/DaemonUtils"
+	"/System/Library/Frameworks/QuickLook.framework/Versions/A/Resources/quicklookd.app/Contents/MacOS/quicklookd"
 };
 
 static const uint8_t find[] = "jpeg";
