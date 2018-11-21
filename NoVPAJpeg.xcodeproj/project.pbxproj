@@ -219,7 +219,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\ncd \"$PROJECT_DIR\" || exit 1\n\nlatestReleaseTag() {\n    data=$(curl -Ls https://api.github.com/repos/\"${1}\"/releases/latest \\\n        | grep tag_name \\\n        | tr -d '\" ,')\n    tagName=${data/tag_name:/}\n    echo \"$tagName\"\n}\n\nlatest=$(latestReleaseTag Acidanthera/Lilu)\nnotFound=false\n\nif [[ -d Lilu.kext ]]; then\n    current=$(/usr/libexec/plistbuddy -c \"print CFBundleShortVersionString\" Lilu.kext/Contents/Info.plist) || exit 3\nelse\n    notFound=true\nfi\n\nif [[ $current != \"$latest\" ]] || $notFound; then\n    curl --location -o Lilu.zip \"https://github.com/acidanthera/Lilu/releases/download/${latest}/${latest}.DEBUG.zip\" || exit 5\n    rm -rf Lilu.kext\n    unzip Lilu.zip\n    rm Lilu.zip\nfi\n\nplistbuddy=/usr/libexec/PlistBuddy\nLILU_VERSION=$($plistbuddy -c \"print CFBundleVersion\" ./Lilu.kext/Contents/Info.plist)\nLILU_COMPATIBLE=$($plistbuddy -c \"print OSBundleCompatibleVersion\" ./Lilu.kext/Contents/Info.plist)\n$plistbuddy -c \"set CFBundleVersion $LILU_VERSION\" ./NoVPAJPEG/Info.plist\n$plistbuddy -c \"set CFBundleShortVersionString $LILU_VERSION\" ./NoVPAJPEG/Info.plist\n$plistbuddy -c \"set OSBundleCompatibleVersion $LILU_COMPATIBLE\" ./NoVPAJPEG/Info.plist\n$plistbuddy -c \"set OSBundleLibraries:as.vit9696.Lilu $LILU_COMPATIBLE\" ./NoVPAJPEG/Info.plist\n\n\n\n";
+			shellScript = "#!/bin/bash\n\ncd \"$PROJECT_DIR\" || exit 1\n\nplistbuddy=/usr/libexec/PlistBuddy\n\nnotFound=false\n\nif [[ -d Lilu.kext ]]; then\n    current=$($plistbuddy -c \"print CFBundleShortVersionString\" Lilu.kext/Contents/Info.plist) || exit 3\nelse\n    notFound=true\nfi\n\nif [[ $current != \"$LILU_VERSION\" ]] || $notFound; then\ncurl --location -o Lilu.zip \"https://github.com/acidanthera/Lilu/releases/download/${LILU_VERSION}/${LILU_VERSION}.DEBUG.zip\" || exit 5\n    rm -rf Lilu.kext\n    unzip Lilu.zip\n    rm Lilu.zip\nfi\n\nlilu_compatible=$($plistbuddy -c \"print OSBundleCompatibleVersion\" ./Lilu.kext/Contents/Info.plist)\n\n$plistbuddy -c \"set OSBundleLibraries:as.vit9696.Lilu $lilu_compatible\" ./NoVPAJPEG/Info.plist\n";
 		};
 		CE5356961FB9BD050051346D /* Archive */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -233,7 +233,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "LILU_VERSION=$(/usr/libexec/PlistBuddy -c \"print CFBundleVersion\" \"$PROJECT_DIR\"/Lilu.kext/Contents/Info.plist)\n\ncd \"${TARGET_BUILD_DIR}\"\n\ndist=(\"$FULL_PRODUCT_NAME\")\nif [ -d \"$DWARF_DSYM_FILE_NAME\" ]; then dist+=(\"$DWARF_DSYM_FILE_NAME\"); fi\n\narchive=\"${PRODUCT_NAME}.${LILU_VERSION}-v${MODULE_VERSION}.$(echo $CONFIGURATION | tr /a-z/ /A-Z/).zip\"\nrm -rf *.zip\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n  strip -x -T \"${EXECUTABLE_PATH}\" &>/dev/null || strip -x \"${EXECUTABLE_PATH}\"\nfi\nzip -qry \"${archive}\" \"${dist[@]}\"\n";
+			shellScript = "LILU_VERSION=$(/usr/libexec/PlistBuddy -c \"print CFBundleVersion\" \"$PROJECT_DIR\"/Lilu.kext/Contents/Info.plist)\n\ncd \"${TARGET_BUILD_DIR}\"\n\ndist=(\"$FULL_PRODUCT_NAME\")\nif [ -d \"$DWARF_DSYM_FILE_NAME\" ]; then dist+=(\"$DWARF_DSYM_FILE_NAME\"); fi\n\narchive=\"${PRODUCT_NAME}-v${MODULE_VERSION}-built-with-Lilu-${LILU_VERSION}-$(echo $CONFIGURATION | tr /a-z/ /A-Z/).zip\"\nrm -rf *.zip\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n  strip -x -T \"${EXECUTABLE_PATH}\" &>/dev/null || strip -x \"${EXECUTABLE_PATH}\"\nfi\nzip -qry \"${archive}\" \"${dist[@]}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -362,6 +362,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library",
 				);
+				LILU_VERSION = 1.2.8;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MODULE_NAME = org.vulgo.NoVPAJpeg;
 				MODULE_START = "$(PRODUCT_NAME)_kern_start";
@@ -407,6 +408,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library",
 				);
+				LILU_VERSION = 1.2.8;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MODULE_NAME = org.vulgo.NoVPAJpeg;
