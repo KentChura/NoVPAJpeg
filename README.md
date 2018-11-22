@@ -4,6 +4,20 @@ NoVPAJpeg Lilu plugin: Disables the hardware JPEG decoding feature of the AppleV
 
 Based (entirely) on [NoTouchID](https://github.com/al3xtjames/NoTouchID)
 
+### Building
+
+#### Xcode
+
+Set LILU_VERSION in 'User-Defined' target build settings, then build.
+
+#### Command line
+
+Specify LILU_VERSION when running xcodebuild:
+
+```
+xcodebuild -target NoVPAJpeg -configuration Release LILU_VERSION=1.2.8
+```
+
 ### License
 
 Copyright (C) 2018 Alex James (TheRacerMaster).
