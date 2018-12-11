@@ -15,6 +15,8 @@ Set LILU_VERSION in 'User-Defined' target build settings, then build.
 Specify LILU_VERSION when running xcodebuild:
 
 ```
+git clone https://github.com/vulgo/NoVPAJpeg.git
+cd NoVPAJpeg
 xcodebuild -target NoVPAJpeg -configuration Release LILU_VERSION=1.2.8
 ```
 
