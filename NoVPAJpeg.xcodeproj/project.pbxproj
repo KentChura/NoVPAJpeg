@@ -219,7 +219,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\ncd \"$PROJECT_DIR\" || exit 1\n\nplistbuddy=/usr/libexec/PlistBuddy\n\nnotFound=false\n\nif [[ -d Lilu.kext ]]; then\n    current=$($plistbuddy -c \"print CFBundleShortVersionString\" Lilu.kext/Contents/Info.plist) || exit 3\nelse\n    notFound=true\nfi\n\nif [[ $current != \"$LILU_VERSION\" ]] || $notFound; then\ncurl --location -o Lilu.zip \"https://github.com/acidanthera/Lilu/releases/download/${LILU_VERSION}/${LILU_VERSION}.DEBUG.zip\" || exit 5\n    rm -rf Lilu.kext\n    unzip Lilu.zip\n    rm Lilu.zip\nfi\n\nlilu_compatible=$($plistbuddy -c \"print OSBundleCompatibleVersion\" ./Lilu.kext/Contents/Info.plist)\n\n$plistbuddy -c \"set OSBundleLibraries:as.vit9696.Lilu $lilu_compatible\" ./NoVPAJPEG/Info.plist\n";
+			shellScript = "#!/bin/bash\n\ncd \"$PROJECT_DIR\" || exit 1\n\nplistbuddy=/usr/libexec/PlistBuddy\n\nnotFound=false\n\nif [[ -d Lilu.kext ]]; then\n    current=$($plistbuddy -c \"print CFBundleShortVersionString\" Lilu.kext/Contents/Info.plist) || exit 3\nelse\n    notFound=true\nfi\n\nif [[ $current != \"$LILU_VERSION\" ]] || $notFound; then\ncurl --location -o Lilu.zip \"https://github.com/acidanthera/Lilu/releases/download/${LILU_VERSION}/${LILU_VERSION}.DEBUG.zip\" || exit 5\n    rm -rf Lilu.kext\n    unzip Lilu.zip\n    rm Lilu.zip\nfi\n\nlilu_compatible=$($plistbuddy -c \"print OSBundleCompatibleVersion\" ./Lilu.kext/Contents/Info.plist)\n\n$plistbuddy -c \"set OSBundleLibraries:as.vit9696.Lilu $lilu_compatible\" ./NoVPAJPEG/Info.plist\n\n$plistbuddy -c \"set OSBundleLibraries:as.vit9696.Lilu $lilu_compatible\" \"${CONFIGURATION_BUILD_DIR}/${INFOPLIST_PATH}\"\n";
 		};
 		CE5356961FB9BD050051346D /* Archive */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -362,7 +362,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library",
 				);
-				LILU_VERSION = 1.2.8;
+				LILU_VERSION = 1.3.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MODULE_NAME = org.vulgo.NoVPAJpeg;
 				MODULE_START = "$(PRODUCT_NAME)_kern_start";
@@ -408,7 +408,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Lilu.kext/Contents/Resources/Library",
 				);
-				LILU_VERSION = 1.2.8;
+				LILU_VERSION = 1.3.0;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MODULE_NAME = org.vulgo.NoVPAJpeg;
