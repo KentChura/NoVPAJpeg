@@ -47,6 +47,9 @@ The Intel accelerator driver must be found using one of these paths, otherwise P
 
 For systems where the IGPU is unavailable, NoVPAJpeg introduces a patch for the AppleVPA.framework binary so that it no longer matches 'jpeg' in the above Info.plist, for any Mac model.
 
+### Credits
+
+[Cyberdevs](https://www.insanelymac.com/forum/topic/334881-how-to-fix-quicklook-and-preview-loading-issues-in-mojave/), [arsradu](https://www.insanelymac.com/forum/topic/334881-how-to-fix-quicklook-and-preview-loading-issues-in-mojave/)
 
 ### License
 
