@@ -1,4 +1,12 @@
-## NoVPAJpeg
+## NoVPAJpeg (Deprecated)
+
+NoVPAJpeg.kext is deprecated.
+
+In case its functionality is needed, use [WhateverGreen.kext](https://github.com/acidanthera/WhateverGreen) and add the following boot arguments:
+
+```
+shikigva=32 shiki-id=Mac-7BA5B2D9E42DDD94
+```
 
 NoVPAJpeg Lilu plugin: Disables the hardware JPEG decoding feature of the AppleVPA framework that breaks Preview and Quicklook on some systems.
 
